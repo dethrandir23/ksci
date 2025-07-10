@@ -1,106 +1,64 @@
-# Kartascript 🧠⚡
+# ksci
 
-Kartascript is a simple interpreted scripting language designed for embedded systems like the Raspberry Pi Pico.  
-It focuses on clarity, low-level control (GPIO, delay, variables), and modularity — perfect for DIY hardware terminals and microcontroller automation.
+**ksci** is an interpreter for **Kartascript**, a simple command-based scripting language designed for embedded systems like Raspberry Pi Pico. Written in C++, it allows basic GPIO and control operations in an intuitive way.
 
----
+## Features
 
-## ✨ Features
+- Kartascript interpreter
+- GPIO, variable, and delay operations
+- Control flow with GOTO, LABEL, IF, CALL, RETURN
+- Easily extensible in C++
+- Command-line interface using Cliopatra.
 
-- Minimal syntax, easy to read and write
-- No compilation required — runs directly via the `ksci` interpreter
-- Works with GPIO pins, delays, and simple control structures
-- Designed with microcontrollers in mind
-- Extendable with labels, functions (CALL/RETURN), and conditional jumps
+## Compiling
 
----
+```bash
+git clone https://github.com/kullaniciadi/ksci.git
+cd ksci
+cmake -B build
+cmake --build build
+```
 
-## 📦 Example Script
+## USAGE
 
 ```kartascript
-SET LED 13
-SET DELAY_TIME 500
-SET COUNTER 0
-SET MAX_COUNT 5
+./ksci run <dosya_yolu.ks>
+```
 
-LABEL LOOP
-    PRINT "BLINKING: " COUNTER "/" MAX_COUNT ENDL
-    GPIO LED ON
-    DELAY DELAY_TIME
-    GPIO LED OFF
-    DELAY DELAY_TIME
-    ADD COUNTER COUNTER 1
-    IF COUNTER == MAX_COUNT GOTO END
-    GOTO LOOP
+Example:
+```kartascript
+./ksci run ../test/deneme.ks
+```
 
+## Kartascript File Format
+
+`.ks` files contain human-readable instructions interpreted at runtime.
+
+Example:
+```
+SET A 0
+LABEL START
+    PRINT A
+    ADD A A 1
+    IF A == 5 GOTO END
+    GOTO START
 LABEL END
-    PRINT "DONE!" ENDL
+    PRINT "DONE"
 ```
 
----
+## SUPPORTED COMMANDS
 
-## 🧾 Supported Instructions
+- `SET <var> <value>`
+- `ADD <target> <a> <b>`
+- `SUB <target> <a> <b>`
+- `GPIO <pin> ON/OFF`
+- `DELAY <ms>`
+- `PRINT <expr1> <expr2> ... ENDL`
+- `LABEL <name>`
+- `GOTO <label>`
+- `IF <a> <op> <b> GOTO <label>`
+- `CALL <label>`, `RETURN`
 
-| Instruction | Description |
-|------------|-------------|
-| `SET var value` | Define a variable with an integer value |
-| `ADD target val1 val2` | target = val1 + val2 |
-| `SUB target val1 val2` | target = val1 - val2 |
-| `GPIO pin ON/OFF` | Simulates turning a GPIO pin on or off |
-| `DELAY ms` | Wait for given milliseconds |
-| `LABEL name` | Define a label for jumps or calls |
-| `GOTO label` | Jump to a label unconditionally |
-| `IF val1 OP val2 GOTO label` | Conditional jump. Supported operators: `==`, `!=`, `>`, `<`, `>=`, `<=` |
-| `CALL label` | Call a subroutine (pushes current line to stack) |
-| `RETURN` | Return to previous location after `CALL` |
-| `PRINT value...` | Print one or more values. Can be constants, variables, or `"strings"` |
-| `READ pin` | (Simulated) read value from pin into variable |
+## LICENSE
 
-> ✅ `ENDL` is a special keyword used in `PRINT` to add a newline (`\n`) and flush output.
-
----
-
-## 📘 Syntax Tips
-
-- All values are separated by spaces.
-- Variables are **case-sensitive**.
-- Labels are declared as: `LABEL name`
-- No indentation or braces — structure is handled via labels and jumps.
-- Strings must be in `"double quotes"` and cannot contain spaces.
-- To prevent buffering issues in embedded terminals, always end prints with `ENDL`.
-
----
-
-## 🧪 Sample Output
-
-```text
-BLINKING: 0 / 5
-GPIO 13 is on now!
-GPIO 13 is off now!
-BLINKING: 1 / 5
-GPIO 13 is on now!
-GPIO 13 is off now!
-...
-DONE!
-```
-
----
-
-## 🚀 Roadmap Ideas
-
-- GPIO read/write on real hardware (e.g., Pico SDK integration)
-- File I/O from SD cards
-- Built-in `nano`-like script editor for devices with screens
-- Scripting REPL (interactive mode)
-- String operations, arrays, and `WHILE` loops
-
----
-
-## 📄 License
-
-MIT License — free to use, modify, and embed in your toaster robot.
-
----
-
-🧑‍💻 Written by **Bekir Efe Öztürk**
-👾 Language Engine: [`ksci`](https://github.com/dethrandir23/ksci)
+MIT License — see the `LICENSE` file for details.
