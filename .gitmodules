@@ -1,0 +1,3 @@
+[submodule "libs/cliopatra"]
+	path = libs/cliopatra
+	url = https://github.com/dethrandir23/cliopatra
