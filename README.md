@@ -22,7 +22,7 @@ cmake --build build
 ## USAGE
 
 ```kartascript
-./ksci run <dosya_yolu.ks>
+./ksci run <file_path.ks>
 ```
 
 Example:
